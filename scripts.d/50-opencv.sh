@@ -164,7 +164,8 @@ ffbuild_dockerbuild() {
 }
 
 ffbuild_configure() {
-    echo --enable-libopencv  --pkg-config-flags="--define-variable=prefix=$FFBUILD_PREFIX"
+    #echo --enable-libopencv  --pkg-config-flags="--define-variable=prefix=$FFBUILD_PREFIX"
+    echo --enable-libopencv
 }
 
 ffbuild_unconfigure() {
