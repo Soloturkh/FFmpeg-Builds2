@@ -2,68 +2,87 @@
 
 SCRIPT_REPO="https://github.com/opencv/opencv.git"
 SCRIPT_COMMIT="4.10.0"
+OPENCV_VERSION="4.10.0"
 
 ffbuild_enabled() {
     [[ $TARGET == linux* ]] && return 0
     return 1
 }
 
+ffbuild_dockerdl() {
+	default_dl .
+        echo "git submodule update --init --recursive --depth=1"
+	if [ ! -d "opencv_contrib" ]; then
+		echo "git clone --branch \${OPENCV_VERSION} https://github.com/opencv/opencv_contrib.git"
+	fi
+}
+
 ffbuild_dockerbuild() {
 
-	apt update
-	apt upgrade
+	apt update -y
+	DEBIAN_FRONTEND=noninteractive apt upgrade -y
 	
 	#Generic tools
-	apt install -y build-essential cmake pkg-config unzip yasm git checkinstall
+	DEBIAN_FRONTEND=noninteractive apt install -y build-essential cmake pkg-config unzip yasm git checkinstall curl
 	#image i/o Libs
-	apt install -y libjpeg-dev libpng-dev libtiff-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libjpeg-dev libpng-dev libtiff-dev
 	#Video/Audio Libs
 	# Install basic codec libraries
-	apt install -y libavcodec-dev libavformat-dev libswscale-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libavcodec-dev libavformat-dev libswscale-dev
 
 	# Install GStreamer development libraries
-	apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
 	# Install additional codec and format libraries
-	apt install -y libxvidcore-dev libx264-dev libopus-dev libv4l-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libxvidcore-dev libx264-dev libopus-dev libv4l-dev
 
 	# Install additional audio codec libraries
-	apt install -y libmp3lame-dev libvorbis-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libmp3lame-dev libvorbis-dev
 
 	# Install FFmpeg (which includes libavresample functionality)
-	apt install -y ffmpeg
+	DEBIAN_FRONTEND=noninteractive apt install -y ffmpeg
 
 	# Optional: Install VA-API for hardware acceleration
-	apt install -y libva-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libva-dev
 	
 	# Install video capture libraries and utilities
-    apt install -y libdc1394-25 libdc1394-dev libxine2-dev libv4l-dev v4l-utils
+	DEBIAN_FRONTEND=noninteractive apt install -y libdc1394-25 libdc1394-dev libxine2-dev libv4l-dev v4l-utils
 	
 	#Create a symbolic link for video device header
 	ln -s /usr/include/libv4l1-videodev.h /usr/include/linux/videodev.h
 	
 	#GTK lib for the graphical user functionalites coming from OpenCV highghui module
-	apt install -y libgtk-3-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libgtk-3-dev
 	#Parallelism library C++ for CPU
-	apt install -y libtbb-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libtbb-dev
 	#Optimization libraries for OpenCV
-	apt install -y libatlas-base-dev gfortran
+	DEBIAN_FRONTEND=noninteractive apt install -y libatlas-base-dev gfortran
 	#Optional libraries:
-	apt install -y libprotobuf-dev protobuf-compiler
-	apt install -y libgoogle-glog-dev libgflags-dev
-	apt install -y libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
-	apt install -y libgtk-3-dev libcanberra-gtk* libatlas-base-dev python3-dev python3-numpy
-
+	DEBIAN_FRONTEND=noninteractive apt install -y libprotobuf-dev protobuf-compiler
+	DEBIAN_FRONTEND=noninteractive apt install -y libgoogle-glog-dev libgflags-dev
+	DEBIAN_FRONTEND=noninteractive apt install -y libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
+	DEBIAN_FRONTEND=noninteractive apt install -y libgtk-3-dev libcanberra-gtk* libatlas-base-dev python3-dev python3-numpy
+	#python
+ 	# En son Python sürümünü almak için Deadsnakes PPA ekle
+	DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:deadsnakes/ppa
+	DEBIAN_FRONTEND=noninteractive apt update -y
+ 	# Python 3.20 ve gerekli kütüphaneleri yükle
+   	DEBIAN_FRONTEND=noninteractive apt install -y python3.20 python3.20-dev python3.20-venv python3.20-distutils
+     	# Varsayılan python3 sürümünü Python 3.20 olarak ayarla
+	update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.20 1
+	update-alternatives --config python3
+	# Pip'i güncelle
+	curl -sS https://bootstrap.pypa.io/get-pip.py | python3.20
     # OpenCV ve ek modülleri indir
-    git clone "$SCRIPT_REPO" opencv
-    cd opencv
-    git checkout "$SCRIPT_COMMIT"
+    # git clone "$SCRIPT_REPO" opencv
+    # cd opencv
+    # git checkout "$SCRIPT_COMMIT"
 
     # OpenCV ek modülleri (opencv_contrib) indir
-    git clone https://github.com/opencv/opencv_contrib.git contrib
-    cd contrib
-    git checkout "$SCRIPT_COMMIT"
-    cd ..
+    # git clone https://github.com/opencv/opencv_contrib.git contrib
+    # cd contrib
+    # git checkout "$SCRIPT_COMMIT"
+    # cd ..
 
     # Build dizini oluştur ve CMake ile yapılandır
     mkdir build && cd build
