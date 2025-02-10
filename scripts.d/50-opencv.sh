@@ -23,7 +23,7 @@ ffbuild_dockerbuild() {
 	DEBIAN_FRONTEND=noninteractive apt upgrade -y
 	
 	#Generic tools
-	DEBIAN_FRONTEND=noninteractive apt install -y build-essential cmake pkg-config unzip yasm git checkinstall curl
+	DEBIAN_FRONTEND=noninteractive apt install -y build-essential cmake pkg-config unzip yasm git checkinstall curl software-properties-common
 	#image i/o Libs
 	DEBIAN_FRONTEND=noninteractive apt install -y libjpeg-dev libpng-dev libtiff-dev
 	#Video/Audio Libs
