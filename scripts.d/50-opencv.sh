@@ -64,15 +64,15 @@ ffbuild_dockerbuild() {
 	DEBIAN_FRONTEND=noninteractive apt install -y libgtk-3-dev libcanberra-gtk* libatlas-base-dev python3-dev python3-numpy
 	#python
  	# En son Python sürümünü almak için Deadsnakes PPA ekle
-	DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:deadsnakes/ppa
-	DEBIAN_FRONTEND=noninteractive apt update -y
+	# DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:deadsnakes/ppa
+	# DEBIAN_FRONTEND=noninteractive apt update -y
  	# Python 3.20 ve gerekli kütüphaneleri yükle
-   	DEBIAN_FRONTEND=noninteractive apt install -y python3.20 python3.20-dev python3.20-venv python3.20-distutils
+   	# DEBIAN_FRONTEND=noninteractive apt install -y python3.20 python3.20-dev python3.20-venv python3.20-distutils
      	# Varsayılan python3 sürümünü Python 3.20 olarak ayarla
-	update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.20 1
-	update-alternatives --config python3
+	# update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.20 1
+	# update-alternatives --config python3
 	# Pip'i güncelle
-	curl -sS https://bootstrap.pypa.io/get-pip.py | python3.20
+	# curl -sS https://bootstrap.pypa.io/get-pip.py | python3.20
     # OpenCV ve ek modülleri indir
     # git clone "$SCRIPT_REPO" opencv
     # cd opencv
