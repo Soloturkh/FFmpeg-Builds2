@@ -62,6 +62,7 @@ ffbuild_dockerbuild() {
 	DEBIAN_FRONTEND=noninteractive apt install -y libgoogle-glog-dev libgflags-dev
 	DEBIAN_FRONTEND=noninteractive apt install -y libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 	DEBIAN_FRONTEND=noninteractive apt install -y libgtk-3-dev libcanberra-gtk* libatlas-base-dev python3-dev python3-numpy
+
 	#python
  	# En son Python sürümünü almak için Deadsnakes PPA ekle
 	# DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:deadsnakes/ppa
@@ -133,7 +134,8 @@ ffbuild_dockerbuild() {
         -DBUILD_PKG_CONFIG=ON \
         -DOPENCV_ENABLE_PKG_CONFIG=ON \
         -DOPENCV_GENERATE_PKGCONFIG=ON \
-        -DOPENCV_PC_FILE_NAME=opencv.pc \
+	-DOPENCV_GENERATE_PKGCONFIG=YES \
+        -DOPENCV_PC_FILE_NAME=opencv4.pc \
         -DOPENCV_ENABLE_NONFREE=ON \
         -DBUILD_EXAMPLES=OFF \
 		-DINSTALL_PYTHON_EXAMPLES=OFF \
@@ -146,6 +148,7 @@ ffbuild_dockerbuild() {
     make install
 
     # opencv.pc dosyasını tüm build dizininde ara ve kopyala
+    export PKG_CONFIG_PATH="$FFBUILD_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
     mkdir -p "$FFBUILD_PREFIX/lib/pkgconfig"
     found_pc_files=$(find . -name 'opencv.pc' -o -name 'opencv4.pc')
     
@@ -161,7 +164,7 @@ ffbuild_dockerbuild() {
 }
 
 ffbuild_configure() {
-    echo --enable-libopencv
+    echo --enable-libopencv  --pkg-config-flags="--define-variable=prefix=$FFBUILD_PREFIX"
 }
 
 ffbuild_unconfigure() {
@@ -169,9 +172,9 @@ ffbuild_unconfigure() {
 }
 
 ffbuild_cflags() {
-    echo -I/usr/local/include/opencv4
+    echo -I$FFBUILD_PREFIX/include/opencv4
 }
 
 ffbuild_ldflags() {
-    echo -L/usr/local/lib
+    echo -L$FFBUILD_PREFIX/lib
 }
