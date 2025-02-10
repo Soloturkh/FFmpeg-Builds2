@@ -167,3 +167,11 @@ ffbuild_configure() {
 ffbuild_unconfigure() {
     echo --disable-libopencv
 }
+
+ffbuild_cflags() {
+    echo -I/usr/local/include/opencv4
+}
+
+ffbuild_ldflags() {
+    echo -L/usr/local/lib
+}
