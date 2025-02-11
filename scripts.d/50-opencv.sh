@@ -162,7 +162,7 @@ ffbuild_dockerbuild() {
     while IFS= read -r pc_file; do
         echo "Bulundu: $pc_file -> $FFBUILD_PREFIX/lib/pkgconfig/"
 	cat "$pc_file"  # Dosya içeriğini ekrana yazdır
-        //cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
+        #cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
     done <<< "$found_pc_files"
 }
 
