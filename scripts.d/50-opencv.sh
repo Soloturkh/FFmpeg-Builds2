@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/opencv/opencv.git"
-SCRIPT_COMMIT="4.10.0"
-OPENCV_VERSION="4.10.0"
+SCRIPT_COMMIT="4.11.0"
+OPENCV_VERSION="4.11.0"
 
 ffbuild_enabled() {
     [[ $TARGET == linux* ]] && return 0
