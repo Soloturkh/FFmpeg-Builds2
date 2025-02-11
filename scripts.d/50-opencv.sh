@@ -134,7 +134,7 @@ ffbuild_dockerbuild() {
         -DBUILD_PKG_CONFIG=ON \
         -DOPENCV_ENABLE_PKG_CONFIG=ON \
         -DOPENCV_GENERATE_PKGCONFIG=ON \
-        -DOPENCV_PC_FILE_NAME=opencv4.pc \
+        -DOPENCV_PC_FILE_NAME=opencv.pc \
         -DOPENCV_ENABLE_NONFREE=ON \
         -DBUILD_EXAMPLES=OFF \
 		-DINSTALL_PYTHON_EXAMPLES=OFF \
@@ -148,7 +148,7 @@ ffbuild_dockerbuild() {
     ldconfig
 
     # opencv.pc dosyasını tüm build dizininde ara ve kopyala
-    export PKG_CONFIG_PATH="$FFBUILD_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+    #export PKG_CONFIG_PATH="$FFBUILD_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
     mkdir -p "$FFBUILD_PREFIX/lib/pkgconfig"
     found_pc_files=$(find . -name 'opencv.pc' -o -name 'opencv4.pc')
     
@@ -172,11 +172,11 @@ ffbuild_unconfigure() {
     echo --disable-libopencv
 }
 
-ffbuild_cflags() {
-    echo -I$FFBUILD_PREFIX/include/opencv4
-}
+#ffbuild_cflags() {
+#    echo -I$FFBUILD_PREFIX/include/opencv4
+#}
 
-ffbuild_ldflags() {
-    #echo -L$FFBUILD_PREFIX/lib
-    return 0
-}
+#ffbuild_ldflags() {
+#    #echo -L$FFBUILD_PREFIX/lib
+#    return 0
+#}
