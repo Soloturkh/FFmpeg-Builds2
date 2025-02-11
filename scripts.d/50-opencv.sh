@@ -173,9 +173,11 @@ ffbuild_unconfigure() {
 }
 
 ffbuild_cflags() {
-    echo -I$FFBUILD_PREFIX/include/opencv4
+    #echo -I$FFBUILD_PREFIX/include/opencv4
+    echo opencv
 }
 
 ffbuild_ldflags() {
-    echo -L$FFBUILD_PREFIX/lib
+    #echo -L$FFBUILD_PREFIX/lib
+    echo opencv
 }
