@@ -162,7 +162,7 @@ ffbuild_dockerbuild() {
     while IFS= read -r pc_file; do
         echo "Bulundu: $pc_file -> $FFBUILD_PREFIX/lib/pkgconfig/"
 	cat "$pc_file"  # Dosya içeriğini ekrana yazdır
-        cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
+        //cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
     done <<< "$found_pc_files"
 }
 
@@ -174,10 +174,10 @@ ffbuild_unconfigure() {
     echo --disable-libopencv
 }
 
-ffbuild_cflags() {
-    echo -I$FFBUILD_PREFIX/include/opencv4
-}
+#ffbuild_cflags() {
+#    echo -I$FFBUILD_PREFIX/include/opencv4
+#}
 
-ffbuild_ldflags() {
-    echo -L$FFBUILD_PREFIX/lib
-}
+#ffbuild_ldflags() {
+#    echo -L$FFBUILD_PREFIX/lib
+#}
