@@ -134,7 +134,6 @@ ffbuild_dockerbuild() {
         -DBUILD_PKG_CONFIG=ON \
         -DOPENCV_ENABLE_PKG_CONFIG=ON \
         -DOPENCV_GENERATE_PKGCONFIG=ON \
-	-DOPENCV_GENERATE_PKGCONFIG=YES \
         -DOPENCV_PC_FILE_NAME=opencv4.pc \
         -DOPENCV_ENABLE_NONFREE=ON \
         -DBUILD_EXAMPLES=OFF \
@@ -174,8 +173,7 @@ ffbuild_unconfigure() {
 }
 
 ffbuild_cflags() {
-    #echo -I$FFBUILD_PREFIX/include/opencv4
-    return 0
+    echo -I$FFBUILD_PREFIX/include/opencv4
 }
 
 ffbuild_ldflags() {
