@@ -159,8 +159,13 @@ ffbuild_dockerbuild() {
 
     while IFS= read -r pc_file; do
         echo "Bulundu: $pc_file -> $FFBUILD_PREFIX/lib/pkgconfig/"
+	cat "$pc_file"  # Dosya içeriğini ekrana yazdır
         cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
     done <<< "$found_pc_files"
+    echo "Hata kontrol..."
+    pkg-config --modversion opencv4
+    echo "Hata kontrol2..."
+    pkg-config --modversion opencv
 }
 
 ffbuild_configure() {
