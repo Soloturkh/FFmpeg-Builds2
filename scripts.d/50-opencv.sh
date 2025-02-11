@@ -146,6 +146,7 @@ ffbuild_dockerbuild() {
     # Derleme ve kurulum
     make -j$(nproc)
     make install
+    ldconfig
 
     # opencv.pc dosyasını tüm build dizininde ara ve kopyala
     export PKG_CONFIG_PATH="$FFBUILD_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -174,10 +175,10 @@ ffbuild_unconfigure() {
 
 ffbuild_cflags() {
     #echo -I$FFBUILD_PREFIX/include/opencv4
-    echo opencv
+    return 0
 }
 
 ffbuild_ldflags() {
     #echo -L$FFBUILD_PREFIX/lib
-    echo opencv
+    return 0
 }
