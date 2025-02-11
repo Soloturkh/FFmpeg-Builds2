@@ -136,7 +136,7 @@ ffbuild_dockerbuild() {
         -DOPENCV_GENERATE_PKGCONFIG=ON \
         -DOPENCV_PC_FILE_NAME=opencv4.pc \
 	-DCMAKE_INSTALL_LIBDIR=lib \
-        -DCMAKE_INSTALL_PKGCONFIGDIR=lib\pkgconfig \
+        -DCMAKE_INSTALL_PKGCONFIGDIR=lib/pkgconfig \
         -DOPENCV_ENABLE_NONFREE=ON \
         -DBUILD_EXAMPLES=OFF \
 		-DINSTALL_PYTHON_EXAMPLES=OFF \
