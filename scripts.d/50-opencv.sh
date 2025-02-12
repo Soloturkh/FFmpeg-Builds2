@@ -86,6 +86,7 @@ ffbuild_dockerbuild() {
     # cd ..
 
     # Build dizini oluştur ve CMake ile yapılandır
+    mkdir -p "$FFBUILD_PREFIX/lib/pkgconfig"
     mkdir build && cd build
 
     if command -v nvidia-smi &> /dev/null; then
@@ -165,7 +166,7 @@ ffbuild_dockerbuild() {
         cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
     done <<< "$found_pc_files"
     echo "kopyası"
-    cat "$FFBUILD_PREFIX/lib/pkgconfig/$pc_file"
+    cat "$FFBUILD_PREFIX/lib/pkgconfig/opencv4.pc"
     install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
     /usr/bin/install -c -m 644 opencv4.pc $FFBUILD_PREFIX/lib/pkgconfig
 }
