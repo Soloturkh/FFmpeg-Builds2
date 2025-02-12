@@ -134,7 +134,7 @@ ffbuild_dockerbuild() {
         -DBUILD_PKG_CONFIG=ON \
         -DOPENCV_ENABLE_PKG_CONFIG=ON \
         -DOPENCV_GENERATE_PKGCONFIG=ON \
-        -DCMAKE_INSTALL_PKGCONFIGDIR=..$FFBUILD_PREFIX/lib/pkgconfig \
+        -DCMAKE_INSTALL_PKGCONFIGDIR=lib/pkgconfig \
 	-DOPENCV_PC_FILE_NAME=opencv4.pc \
 	-DCMAKE_INSTALL_LIBDIR=lib \
         -DOPENCV_ENABLE_NONFREE=ON \
@@ -165,8 +165,8 @@ ffbuild_dockerbuild() {
         cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
     done <<< "$found_pc_files"
 
-    install -d -m 0755 /opt/ffbuild/lib/pkgconfig
-    /usr/bin/install -c -m 644 opencv4.pc '/opt/ffbuild/lib/pkgconfig'
+    install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
+    /usr/bin/install -c -m 644 opencv4.pc $FFBUILD_PREFIX/lib/pkgconfig
 }
 
 ffbuild_configure() {
