@@ -161,10 +161,11 @@ ffbuild_dockerbuild() {
 
     while IFS= read -r pc_file; do
         echo "Bulundu: $pc_file -> $FFBUILD_PREFIX/lib/pkgconfig/"
-	cat "$pc_file"  # Dosya içeriğini ekrana yazdır
+	#cat "$pc_file"  # Dosya içeriğini ekrana yazdır
         cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
     done <<< "$found_pc_files"
-
+    echo "kopyası"
+    cat "$FFBUILD_PREFIX/lib/pkgconfig/$pc_file"
     install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
     /usr/bin/install -c -m 644 opencv4.pc $FFBUILD_PREFIX/lib/pkgconfig
 }
