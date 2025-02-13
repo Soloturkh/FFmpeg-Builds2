@@ -164,8 +164,8 @@ ffbuild_dockerbuild() {
         echo "Bulundu: $pc_file -> $FFBUILD_PREFIX/lib/pkgconfig/"
 	#cat "$pc_file"  # Dosya içeriğini ekrana yazdır
         #cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
-	#install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
-	#/usr/bin/install -c -m 644 "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
+	install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
+	/usr/bin/install -c -m 644 "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
  	#install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
  	#/usr/bin/install -c -m 644 "$pc_file"
     done <<< "$found_pc_files"
