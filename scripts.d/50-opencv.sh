@@ -3,6 +3,7 @@
 SCRIPT_REPO="https://github.com/opencv/opencv.git"
 SCRIPT_COMMIT="4.8.1"
 OPENCV_VERSION="4.8.1"
+WORKDIR="/src/opencv"
 
 ffbuild_enabled() {
     [[ $TARGET == linux* ]] && return 0
@@ -29,8 +30,7 @@ ffbuild_dockerbuild() {
 	    rm -rf /var/lib/apt/lists/*
 	
 	# Build OpenCV 4.x (static)
-	ARG OPENCV_VERSION=4.8.1
-	WORKDIR /src/opencv
+	cd $WORKDIR
 	RUN git clone https://github.com/opencv/opencv.git . && \
 	    git checkout $OPENCV_VERSION && \
 	    mkdir build && \
