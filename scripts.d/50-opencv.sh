@@ -135,9 +135,9 @@ ffbuild_dockerbuild() {
         -DBUILD_PKG_CONFIG=ON \
         -DOPENCV_ENABLE_PKG_CONFIG=ON \
         -DOPENCV_GENERATE_PKGCONFIG=ON \
-        -DCMAKE_INSTALL_PKGCONFIGDIR=lib/pkgconfig \
-	-DOPENCV_PC_FILE_NAME=opencv4.pc \
 	-DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_INSTALL_PKGCONFIGDIR=lib/pkgconfig \
+	 # -DOPENCV_PC_FILE_NAME=opencv4.pc \
         -DOPENCV_ENABLE_NONFREE=ON \
         -DBUILD_EXAMPLES=OFF \
 		-DINSTALL_PYTHON_EXAMPLES=OFF \
@@ -164,8 +164,10 @@ ffbuild_dockerbuild() {
         echo "Bulundu: $pc_file -> $FFBUILD_PREFIX/lib/pkgconfig/"
 	#cat "$pc_file"  # Dosya içeriğini ekrana yazdır
         #cp -f "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
-	install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
-	/usr/bin/install -c -m 644 "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
+	#install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
+	#/usr/bin/install -c -m 644 "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/"
+ 	#install -d -m 0755 $FFBUILD_PREFIX/lib/pkgconfig
+ 	#/usr/bin/install -c -m 644 "$pc_file"
     done <<< "$found_pc_files"
     
     cat "$FFBUILD_PREFIX/lib/pkgconfig/opencv4.pc"
