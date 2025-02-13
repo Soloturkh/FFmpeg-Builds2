@@ -32,7 +32,7 @@ ffbuild_dockerbuild() {
 	# Build OpenCV 4.x (static)
  	mkdir -p $WORKDIR
 	cd $WORKDIR
-	RUN git clone https://github.com/opencv/opencv.git . && \
+	git clone https://github.com/opencv/opencv.git . && \
 	    git checkout $OPENCV_VERSION && \
 	    mkdir build && \
 	    cd build && \
