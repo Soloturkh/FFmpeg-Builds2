@@ -9,7 +9,7 @@ wget yasm nasm libtool autoconf automake
 FF_CONFIGURE+=" --enable-libopencv"
 PKG_CONFIG_LIBDIR+=":/usr/local/share/pkgconfig:/usr/local/bin/pkgconfig"
 FF_CFLAGS+=" -I/usr/local/include/opencv4"
-FF_LDFLAGS+=" -L/usr/local/lib -lopencv_world"
+FF_LDFLAGS+=" -L/usr/local/lib"
 
 
 build() {
