@@ -5,17 +5,15 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get update && DEBIAN_FRONTEND=noninterac
 build-essential cmake git ninja-build pkg-config \
 wget yasm nasm libtool autoconf automake
 
-PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-    
 # OpenCV + contrib static build
 FF_CONFIGURE+=" --enable-libopencv"
-FF_CFLAGS+=" -I/usr/local/include/opencv4"
-FF_LDFLAGS+=" -L/usr/local/lib -lopencv_world"
+FF_CFLAGS+=" -I/opt/ffbuild/include/opencv4"
+FF_LDFLAGS+=" -L/opt/ffbuild/lib -lopencv_world"
 
 add_pkg_config() {
   echo "Generating opencv.pc"
-  cat >/usr/local/lib/pkgconfig/opencv_world.pc <<EOF
-prefix=/usr/local
+  cat >/opt/ffbuild/lib/pkgconfig/opencv_world.pc <<EOF
+prefix=/opt/ffbuild
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib
 includedir=\${prefix}/include/opencv4
@@ -42,7 +40,7 @@ build() {
     -DBUILD_SHARED_LIBS=OFF \
     -DBUILD_opencv_world=ON \
     -DOPENCV_EXTRA_MODULES_PATH=../contrib/modules \
-    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    -DCMAKE_INSTALL_PREFIX=/opt/ffbuild \
     -DBUILD_TESTS=OFF \
     -DBUILD_PERF_TESTS=OFF \
     -DOPENCV_GENERATE_PKGCONFIG=ON \
