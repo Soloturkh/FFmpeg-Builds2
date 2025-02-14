@@ -13,7 +13,7 @@ FF_LDFLAGS+=" -L/usr/local/lib"
 
 
 build() {
-  DEBIAN_FRONTEND=noninteractive apt install libopencv-dev
+  DEBIAN_FRONTEND=noninteractive apt install -y libopencv-dev
 }
 
 # Build komutunu çağır
