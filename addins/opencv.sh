@@ -1,6 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
+DEBIAN_FRONTEND=noninteractive sudo apt-get update && DEBIAN_FRONTEND=noninteractive sudo apt-get install -y \
+build-essential cmake git ninja-build pkg-config \
+wget yasm nasm libtool autoconf automake \
+ && rm -rf /var/lib/apt/lists/*
+
+PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+    
 # OpenCV + contrib static build
 FF_CONFIGURE+=" --enable-libopencv"
 FF_CFLAGS+=" -I/usr/local/include/opencv4"
