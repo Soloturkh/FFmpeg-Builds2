@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/opencv/opencv.git"
-OPENCV_VERSION="4.10.0"
+SCRIPT_COMMIT="4.10.0"
 
 ffbuild_enabled() {
     [[ $TARGET == linux* ]] && return 0
@@ -9,15 +9,15 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerdl() {
-	  # OpenCV core
-    git clone https://github.com/opencv/opencv.git --branch $OPENCV_VERSION --depth 1
-    mkdir -p opencv/build && cd opencv/build
-  
-    # OpenCV contrib
-    git clone https://github.com/opencv/opencv_contrib.git --branch $OPENCV_VERSION --depth 1 ../contrib
+	default_dl .
+        echo "git submodule update --init --recursive --depth=1"
+	if [ ! -d "opencv_contrib" ]; then
+		echo "git clone --branch \${SCRIPT_COMMIT} https://github.com/opencv/opencv_contrib.git"
+	fi
 }
 
 ffbuild_dockerbuild() {
+    mkdir build && cd build
     if command -v nvidia-smi &> /dev/null; then
     		echo "NVIDIA GPU algılandı, CUDA desteği ve TBB devre dışı bırakılıyor..."
     		GPU_OPTIONS="-DWITH_CUDA=ON \
