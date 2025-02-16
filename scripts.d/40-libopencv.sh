@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/opencv/opencv.git"
-SCRIPT_COMMIT="4.10.0"
+SCRIPT_COMMIT="4.11.0"
 
 ffbuild_enabled() {
     [[ $TARGET == linux* ]] && return 0
@@ -66,13 +66,17 @@ ffbuild_dockerbuild() {
 		    -DINSTALL_PYTHON_EXAMPLES=OFF \
 		    -DINSTALL_C_EXAMPLES=OFF \
 		    -DBUILD_ZLIB=ON \
-		    -DBUILD_SHARED_LIBS=OFF \
+		    -DBUILD_SHARED_LIBS=ON \
         ..
 
     ninja -j$(nproc)
     ninja install
-
-    cat >"$FFBUILD_PREFIX"/lib/pkgconfig/opencv.pc <<EOF
+    find / -name *.pc 2>/dev/null
+    found_pc_files=$(find . -name 'opencv.pc' -o -name 'opencv4.pc')
+    while IFS= read -r pc_file; do
+	cat "$pc_file"
+    done <<< "$found_pc_files"
+    cat >"$FFBUILD_PREFIX"/lib/pkgconfig/opencv4.pc <<EOF
 prefix=$FFBUILD_PREFIX
 exec_prefix=\${prefix}
 libdir=\${prefix}/lib
