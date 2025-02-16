@@ -73,24 +73,9 @@ ffbuild_dockerbuild() {
     find / -name *.pc 2>/dev/null
     found_pc_files=$(find . -name 'opencv.pc' -o -name 'opencv4.pc')
     while IFS= read -r pc_file; do
-	cat "$pc_file"
+ 	echo "Libs.private: -lstdc++" >> $pc_file
     done <<< "$found_pc_files"
-    cat >"$FFBUILD_PREFIX"/lib/pkgconfig/opencv4.pc <<EOF
-prefix=$FFBUILD_PREFIX
-exec_prefix=\${prefix}
-libdir=\${prefix}/lib
-sharedlibdir=\${prefix}/lib
-includedir=\${prefix}/include/opencv4
-
-Name: OpenCV
-Description: Open Source Computer Vision Library
-Version: $OPENCV_VERSION
-
-Requires: 
-Libs: -L\${libdir} -L\${sharedlibdir} -lopencv_imgproc -lopencv_core -lstdc++
-Cflags: -I\${includedir}
-Libs.private: -lstdc++
-EOF
+    ln -s opencv4.pc "$FFBUILD_PREFIX"/lib/pkgconfig/opencv4.pc
 }
 
 ffbuild_configure() {
