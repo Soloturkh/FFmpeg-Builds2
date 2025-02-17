@@ -74,8 +74,10 @@ ffbuild_dockerbuild() {
     found_pc_files=$(find . -name 'opencv.pc' -o -name 'opencv4.pc')
     while IFS= read -r pc_file; do
  	#echo "Libs.private: -lstdc++" >> $pc_file
-	if [ ! -L $FFBUILD_PREFIX/lib/pkgconfig/opencv4.pc ]; then
-	    ln -s $pc_file $FFBUILD_PREFIX/lib/pkgconfig/opencv4.pc
+	# Hedefteki dosya zaten varsa, hiçbir işlem yapma
+	if [ ! -e "$FFBUILD_PREFIX/lib/pkgconfig/opencv4.pc" ]; then
+	    # Hedefteki dosya yoksa sembolik bağlantı oluştur
+	    ln -s "$pc_file" "$FFBUILD_PREFIX/lib/pkgconfig/opencv4.pc"
 	fi
     done <<< "$found_pc_files"
 }
