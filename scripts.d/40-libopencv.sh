@@ -83,9 +83,9 @@ ffbuild_dockerbuild() {
 }
 
 ffbuild_configure() {
-    echo --enable-libopencv
+    echo --enable-libopencv4
 }
 
 ffbuild_unconfigure() {
-    echo --disable-libopencv
+    echo --disable-libopencv4
 }
